@@ -14,7 +14,16 @@ form textarea {
 }
 
 #volunteer-items h4 {
-  border-bottom: 1px dotted #222;
+  border-bottom: 1px solid #222;
+}
+
+#volunteer-items .row {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+#volunteer-items .row + .row {
+  border-top: 1px dotted #222;
 }
 
 .hide {
