@@ -11,3 +11,7 @@ form textarea {
 #volunteer-items h4 {
   border-bottom: 1px dotted #222;
 }
+
+.hide {
+  opacity: 0.5;
+}

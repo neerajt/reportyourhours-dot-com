@@ -29,7 +29,7 @@
       var logItems = Array.prototype.map.call(logElements, function(logElement){
         return {
           location: logElement.querySelector('input[name=location]').value,
-          hours: logElement.querySelector('input[name=hours]').value,
+          hours: parseFloat(logElement.querySelector('input[name=hours]').value),
           date: logElement.querySelector('input[name=date]').value,
           details: logElement.querySelector('[name=details]').value
         };
@@ -42,6 +42,7 @@
         .then(function(){
           submitButton.value = 'Submitted!';
           submitButton.disabled = false;
+          form.className = 'hide';
         });
     });
   }
