@@ -4,6 +4,7 @@
     var logItem = document.querySelector('#volunteer-items .row');
     var logContainer = document.getElementById('volunteer-items');
     var addButton = document.getElementById('add');
+    var thankYouMessage = document.getElementById('thank-you');
     var form = document.querySelector('form');
     var submitButton = form.querySelector('[type=submit]');
 
@@ -42,8 +43,18 @@
         .then(function(){
           submitButton.value = 'Submitted!';
           submitButton.disabled = false;
-          form.className = 'hide';
+          resetLogs(logElements);
+          thankYouMessage.className = 'show';
         });
+    });
+  }
+
+  function resetLogs(logRows) {
+    Array.prototype.forEach.call(logRows, function(logRow){
+      var items = logRow.querySelectorAll('input, textarea');
+      Array.prototype.forEach.call(items, function(item){
+        item.value = '';
+      });
     });
   }
 
