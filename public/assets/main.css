@@ -1,0 +1,13 @@
+form input,
+form textarea {
+  font-size: 1.2em;
+  line-height: 1.5em;
+}
+
+#volunteer-items {
+  margin-top: 2em;
+}
+
+#volunteer-items h4 {
+  border-bottom: 1px dotted #222;
+}
