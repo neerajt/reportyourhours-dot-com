@@ -8,6 +8,9 @@
     "start": "node index.js",
     "heroku-postbuild": "knex migrate:latest"
   },
+  "engines": {
+    "node": "8.4.0"
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {
