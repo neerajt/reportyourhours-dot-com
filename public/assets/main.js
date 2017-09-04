@@ -68,15 +68,15 @@
     var logItemHTML = '\
 <div class="four columns">\
   <label for="volunteer-location-' + itemCount + '">Location</label>\
-  <input class="u-full-width" ' + (isRequired && 'require' || '') + ' type="text" placeholder="e.g. George R. Brown" id="volunteer-location-' + itemCount + '" name="location">\
+  <input class="u-full-width" ' + (isRequired && 'required' || '') + ' type="text" placeholder="e.g. George R. Brown" id="volunteer-location-' + itemCount + '" name="location">\
 </div>\
 <div class="two columns">\
   <label for="volunteer-hours-' + itemCount + '">Hours</label>\
-  <input class="u-full-width" ' + (isRequired && 'require' || '') + ' type="number" min="0" id="volunteer-hours-' + itemCount + '" name="hours">\
+  <input class="u-full-width" ' + (isRequired && 'required' || '') + ' type="number" min="0" id="volunteer-hours-' + itemCount + '" name="hours">\
 </div>\
 <div class="two columns">\
   <label for="volunteer-date-' + itemCount + '">Date</label>\
-  <input class="u-full-width" ' + (isRequired && 'require' || '') + ' type="text" id="volunteer-date-' + itemCount + '" name="date">\
+  <input class="u-full-width" ' + (isRequired && 'required' || '') + ' type="text" id="volunteer-date-' + itemCount + '" name="date">\
 </div>\
 <div class="four columns">\
   <label for="volunteer-details-' + itemCount + '">Duties performed (optional)</label>\
