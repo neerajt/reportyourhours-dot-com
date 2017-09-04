@@ -26,14 +26,22 @@
         email: form.querySelector('input[name=email]').value
       };
 
-      var logElements = form.querySelectorAll('#volunteer-items .row');
+      var logElements = form.querySelectorAll('#volunteer-items .log-item');
       var logItems = Array.prototype.map.call(logElements, function(logElement){
-        return {
-          location: logElement.querySelector('input[name=location]').value,
-          hours: parseFloat(logElement.querySelector('input[name=hours]').value),
-          date: logElement.querySelector('input[name=date]').value,
-          details: logElement.querySelector('[name=details]').value
-        };
+        var inputs = logElement.querySelectorAll('input, textarea');
+        var itemData = {};
+        Array.prototype.forEach.call(inputs, function(input){
+          if (input.type === 'number') {
+            itemData[input.name] = parseFloat(input.value);
+            return;
+          }
+          if (input.type === 'checkbox') {
+            itemData[input.name] = input.checked;
+            return;
+          }
+          itemData[input.name] = input.value;
+        });
+        return itemData;
       });
 
       data.log = logItems;
@@ -61,26 +69,50 @@
   function createLogItem(container, isRequired) {
     var isRequired = isRequired || false;
     var newLogItem = document.createElement('div');
-    newLogItem.className = 'row';
+    newLogItem.className = 'log-item';
 
-    var itemCount = container.querySelectorAll('.row').length;
+    var itemCount = container.querySelectorAll('.log-item').length;
 
     var logItemHTML = '\
-<div class="four columns">\
-  <label for="volunteer-location-' + itemCount + '">Location</label>\
-  <input class="u-full-width" ' + (isRequired && 'required' || '') + ' type="text" placeholder="e.g. George R. Brown" id="volunteer-location-' + itemCount + '" name="location">\
+<div class="row">\
+  <div class="four columns">\
+    <label for="volunteer-location-' + itemCount + '">Location</label>\
+    <input class="u-full-width" ' + (isRequired && 'required' || '') + ' type="text" placeholder="e.g. George R. Brown" id="volunteer-location-' + itemCount + '" name="location">\
+  </div>\
+  <div class="two columns">\
+    <label for="volunteer-hours-' + itemCount + '">Hours</label>\
+    <input class="u-full-width" ' + (isRequired && 'required' || '') + ' type="number" min="0" id="volunteer-hours-' + itemCount + '" name="hours">\
+  </div>\
+  <div class="two columns">\
+    <label for="volunteer-date-' + itemCount + '">Date</label>\
+    <input class="u-full-width" ' + (isRequired && 'required' || '') + ' type="text" id="volunteer-date-' + itemCount + '" name="date">\
+  </div>\
 </div>\
-<div class="two columns">\
-  <label for="volunteer-hours-' + itemCount + '">Hours</label>\
-  <input class="u-full-width" ' + (isRequired && 'required' || '') + ' type="number" min="0" id="volunteer-hours-' + itemCount + '" name="hours">\
+<div class="row">\
+  <div class="twelve columns">\
+    <label for="volunteer-details-' + itemCount + '">Activities Performed</label>\
+    <textarea class="u-full-width" ' + (isRequired && 'required' || '') + ' id="volunteer-details-' + itemCount + '" name="details"></textarea>\
+  </div>\
 </div>\
-<div class="two columns">\
-  <label for="volunteer-date-' + itemCount + '">Date</label>\
-  <input class="u-full-width" ' + (isRequired && 'required' || '') + ' type="text" id="volunteer-date-' + itemCount + '" name="date">\
+<div class="row">\
+  <div class="six columns">\
+    <label>\
+      <input type="checkbox" name="isMedical">\
+      I performed medical work at this location.\
+    </label>\
+  </div>\
 </div>\
-<div class="four columns">\
-  <label for="volunteer-details-' + itemCount + '">Duties performed (optional)</label>\
-  <textarea class="u-full-width" id="volunteer-details-' + itemCount + '" name="details"></textarea>\
+<div class="row">\
+  <div class="six columns">\
+    <label for="volunteer-specialized-' + itemCount + '">Other specialized work?</label>\
+    <input class="u-full-width" type="text" placeholder="e.g. Translator, legal" id="volunteer-specialized-' + itemCount + '" name="specialized">\
+  </div>\
+</div>\
+<div class="row">\
+  <div class="six columns">\
+    <label for="volunteer-equiment-' + itemCount + '">Equipment Used (Leave blank if you did not use any)</label>\
+    <input class="u-full-width" type="text" placeholder="e.g. Fork lift" id="volunteer-equiment-' + itemCount + '" name="equiment">\
+  </div>\
 </div>\
     ';
     newLogItem.innerHTML = logItemHTML;

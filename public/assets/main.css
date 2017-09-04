@@ -17,13 +17,21 @@ form textarea {
   border-bottom: 1px solid #222;
 }
 
-#volunteer-items .row {
+#volunteer-items .log-item {
   padding-top: 2em;
   padding-bottom: 2em;
 }
 
-#volunteer-items .row + .row {
+#volunteer-items .log-item .row {
+  margin-bottom: 1.5em;
+}
+
+#volunteer-items .log-item + .log-item {
   border-top: 1px dotted #222;
+}
+
+textarea[name=details] {
+  min-height: 100px;
 }
 
 .hide {
