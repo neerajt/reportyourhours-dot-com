@@ -89,16 +89,16 @@
     var picker = new Pikaday({
       field: newLogItem.querySelector('[name="date"]'),
       format: 'M/D/YYYY',
-      toString(date, format) {
-          // you should do formatting based on the passed format,
-          // but we will just return 'D/M/YYYY' for simplicity
-          var day = date.getDate();
-          var month = date.getMonth() + 1;
-          var year = date.getFullYear();
-          return `${month}/${day}/${year}`;
+      toString: function (date, format) {
+        // you should do formatting based on the passed format,
+        // but we will just return 'D/M/YYYY' for simplicity
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        return month + '/' + day + '/' + year;
       },
-      parse(dateString, format) {
-          return moment(dateString, 'M/D/YYYY');
+      parse: function (dateString, format) {
+        return moment(dateString, 'M/D/YYYY');
       }
     });
 
