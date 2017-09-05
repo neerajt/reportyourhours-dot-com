@@ -19,6 +19,7 @@
     "bookshelf-schema": "^0.3.4",
     "dotenv": "^4.0.0",
     "express": "^4.15.4",
+    "express-sslify": "^1.2.0",
     "knex": "^0.13.0",
     "lodash": "^4.17.4",
     "pg": "^7.3.0",
