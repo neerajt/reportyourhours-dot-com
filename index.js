@@ -7,7 +7,10 @@ const express = require('express'),
 const app = express();
 const apiRoutes = require('./routes/api/v1');
 
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
+if (process.env.NODE_ENV && process.env.NODE_ENV === 'production') {
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+}
+
 app.use(bodyParser.json());
 app.use(serveStatic(path.join(__dirname, 'public')));
 
