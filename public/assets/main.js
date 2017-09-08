@@ -12,49 +12,58 @@
 
     addButton.addEventListener('click', function(clickEvent){
       clickEvent.preventDefault();
-
       createLogItem(logContainer);
     });
 
     form.addEventListener('submit', function(submitEvent){
+      var logElements = form.querySelectorAll('#volunteer-items .log-item');
+
       submitEvent.preventDefault();
+
       submitButton.value = 'Submitting...';
       submitButton.disabled = true;
 
       var data = {
-        name: form.querySelector('input[name=name]').value,
-        email: form.querySelector('input[name=email]').value
+        name:   form.querySelector('input[name=name]').value,
+        email:  form.querySelector('input[name=email]').value,
+        log:    Array.prototype.map.call(logElements, getLogData)
       };
-
-      var logElements = form.querySelectorAll('#volunteer-items .log-item');
-      var logItems = Array.prototype.map.call(logElements, function(logElement){
-        var inputs = logElement.querySelectorAll('input, textarea');
-        var itemData = {};
-        Array.prototype.forEach.call(inputs, function(input){
-          if (input.type === 'number') {
-            itemData[input.name] = parseFloat(input.value);
-            return;
-          }
-          if (input.type === 'checkbox') {
-            itemData[input.name] = input.checked;
-            return;
-          }
-          itemData[input.name] = input.value;
-        });
-        return itemData;
-      });
-
-      data.log = logItems;
 
       axios
         .post('./api/v1/volunteers', data)
         .then(function(){
+
           submitButton.value = 'Submitted!';
           submitButton.disabled = false;
+
           resetLogs(logElements);
+
           thankYouMessage.className = 'show';
         });
     });
+  }
+
+  function getLogData(logElement) {
+    var inputs = logElement.querySelectorAll('input, textarea');
+    var dateInput = logElement.querySelector('[name=date]');
+    var startTimeInput = logElement.querySelector('[name=start]');
+    var endTimeInput = logElement.querySelector('[name=end]');
+
+    var itemData = {};
+    Array.prototype.forEach.call(inputs, function(input){
+      if (input.type === 'checkbox') {
+        itemData[input.name] = input.checked;
+        return;
+      }
+      itemData[input.name] = input.value;
+    });
+    itemData.hours = getTimeDifference(dateInput.value, startTimeInput.value, endTimeInput.value);
+    return itemData;
+  }
+
+  function getTimeDifference(date, timeStart, timeEnd) {
+    var format = 'M/D/YYYY HH:mm A';
+    return moment(date + ' ' + timeEnd, format).diff(moment(date + ' ' + timeStart, format), 'hours', true);
   }
 
   function resetLogs(logRows) {
@@ -79,23 +88,23 @@
     <label for="volunteer-location-' + itemCount + '">Location</label>\
     <input class="u-full-width" ' + (isRequired && 'required' || '') + ' type="text" placeholder="e.g. George R. Brown" id="volunteer-location-' + itemCount + '" name="location">\
   </div>\
-  <div class="four columns">\
+  <div class="eight columns">\
     <label for="volunteer-location-address-' + itemCount + '">Address (optional)</label>\
     <input class="u-full-width"  type="text" placeholder="" id="volunteer-location-address-' + itemCount + '" name="address">\
   </div>\
 </div>\
 <div class="row">\
-  <div class="two columns">\
+  <div class="four columns">\
     <label for="volunteer-date-' + itemCount + '">Date</label>\
     <input class="u-full-width" ' + (isRequired && 'required' || '') + ' type="text" id="volunteer-date-' + itemCount + '" name="date">\
   </div>\
-  <div class="two columns">\
+  <div class="four columns">\
     <label for="volunteer-start-time-' + itemCount + '">Start Time</label>\
-    <input class="u-full-width time start" ' + (isRequired && 'required' || '') + ' type="number" id="volunteer-start-time-' + itemCount + '" name="start">\
+    <input class="u-full-width timepicker" ' + (isRequired && 'required' || '') + ' type="text" id="volunteer-start-time-' + itemCount + '" name="start">\
   </div>\
-  <div class="two columns">\
+  <div class="four columns">\
     <label for="volunteer-end-time-' + itemCount + '">End Time</label>\
-    <input class="u-full-width time end" ' + (isRequired && 'required' || '') + ' type="number" id="volunteer-end-time-' + itemCount + '" name="end">\
+    <input class="u-full-width timepicker" ' + (isRequired && 'required' || '') + ' type="text" id="volunteer-end-time-' + itemCount + '" name="end">\
   </div>\
 </div>\
 <div class="row">\
@@ -105,9 +114,9 @@
   </div>\
 </div>\
 <div class="row"\
-  <div class="four columns">\
-    <label for="other-org-' + itemCount + '"></label>\
-    <textarea class="u-full-width"  id="other-org-' + itemCount + '" name="otherorg" placeholder="If you listed these hours on another organization\'s form, please list the organization name here"></textarea>\
+  <div class="twelve columns">\
+    <label for="other-org-' + itemCount + '">If you listed these hours on another organization\'s form, please list the organization name here</label>\
+    <textarea class="u-full-width"  id="other-org-' + itemCount + '" name="otherorg" placeholder="e.g. Salvation Army"></textarea>\
   </div>\
 </div>\
 <div class="row">\
@@ -147,10 +156,12 @@
       },
       parse: function (dateString, format) {
         return moment(dateString, 'M/D/YYYY');
+
       }
     });
 
-  }
+    $('input.timepicker').timepicker({dynamic:false, interval:60});
+}
 
   function initAnalytics(){
 

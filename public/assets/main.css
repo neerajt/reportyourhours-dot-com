@@ -45,3 +45,11 @@ textarea[name=details] {
 #thank-you.show {
   display: block;
 }
+
+.ui-timepicker-viewport {
+  list-style:none;
+}
+
+.ui-corner-all {
+  cursor: pointer;
+}
