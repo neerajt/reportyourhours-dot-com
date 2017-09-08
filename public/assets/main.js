@@ -161,6 +161,10 @@
     });
 
     $('input.timepicker').timepicker({dynamic:false, interval:60});
+
+    var autocomplete = new google.maps.places.Autocomplete(newLogItem.querySelector('[name="address"]'), {
+      bounds: {north: 30.0238052, west: -95.7817033, south: 29.6279436, east: -95.2219816}
+    });
 }
 
   function initAnalytics(){
