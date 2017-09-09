@@ -135,8 +135,8 @@
 </div>\
 <div class="row">\
   <div class="six columns">\
-    <label for="volunteer-equiment-' + itemCount + '">Equipment Used (Leave blank if you did not use any)</label>\
-    <input class="u-full-width" type="text" placeholder="e.g. Fork lift" id="volunteer-equiment-' + itemCount + '" name="equiment">\
+    <label for="volunteer-equipment-' + itemCount + '">Equipment Used (Leave blank if you did not use any)</label>\
+    <input class="u-full-width" type="text" placeholder="e.g. Fork lift" id="volunteer-equipment-' + itemCount + '" name="equiment">\
   </div>\
 </div>\
     ';
