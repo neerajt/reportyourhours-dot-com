@@ -44,10 +44,19 @@ router.get('/totalhours', function(req, res, next){
 });
 
 router.get('/hours', function(req, res, next){
-  knex.raw(`WITH hours AS(
-         SELECT jsonb_array_elements(log) as hours FROM volunteers
+  knex.raw(`
+      WITH log AS(
+         SELECT jsonb_array_elements(log) as log FROM volunteers
         )
-      SELECT abs((hours ->> 'hours')::float) as hours FROM hours`)
+      SELECT
+      abs((log ->> 'hours')::float) as hours,
+      log ->> 'date' as date,
+      log ->> 'isMedical' as is_medical,
+      log ->> 'equiment' as equipment,
+      log ->> 'details' as details,
+      log ->> 'location' as location
+       FROM log
+      `)
     .then(function(resp) {
       res.send(resp.rows)
       })
