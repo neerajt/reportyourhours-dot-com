@@ -17,6 +17,8 @@
     "body-parser": "^1.17.2",
     "bookshelf": "^0.10.4",
     "bookshelf-schema": "^0.3.4",
+    "d3": "^4.10.2",
+    "dimple-js": "^2.1.4",
     "dotenv": "^4.0.0",
     "express": "^4.15.4",
     "express-sslify": "^1.2.0",
